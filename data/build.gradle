@@ -1,0 +1,61 @@
+apply plugin: 'com.android.library'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-kapt'
+
+android {
+    compileSdkVersion Versions.compileSdkVersion
+    defaultConfig {
+        minSdkVersion Versions.minSdkVersion
+        targetSdkVersion Versions.targetSdkVersion
+
+        javaCompileOptions {
+            annotationProcessorOptions {
+                arguments = ["room.schemaLocation": "$projectDir/schemas".toString()]
+            }
+        }
+
+        consumerProguardFiles 'proguard-rules.pro'
+    }
+
+    sourceSets {
+        main.java.srcDirs += 'src/main/java'
+    }
+}
+
+kapt {
+    correctErrorTypes = true
+}
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+
+    // Kotlin
+    implementation Libs.kotlin
+
+    // Retrofit
+    api Libs.retrofit
+    api Libs.retrofitGson
+    api Libs.retrofitRxJava
+    api Libs.gson
+
+    // OkHttp
+    implementation Libs.okHttp
+    implementation(Libs.okHttpLogging) {
+        exclude group: 'org.json', module: 'json'
+    }
+
+    // RxJava
+    implementation Libs.rxJava
+    implementation Libs.rxKotlin
+
+    // Dagger
+    implementation Libs.dagger
+    kapt Libs.daggerCompiler
+    implementation Libs.daggerAndroidSupport
+    kapt Libs.daggerAndroidProcessor
+
+    // Room
+    api Libs.roomRuntime
+    api Libs.roomRxJava
+    kapt Libs.roomCompiler
+}

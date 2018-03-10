@@ -1,0 +1,80 @@
+apply plugin: 'com.android.application'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-kapt'
+
+android {
+    compileSdkVersion Versions.compileSdkVersion
+    defaultConfig {
+        applicationId "com.zetokz.cryptocurrencyrates"
+        minSdkVersion Versions.minSdkVersion
+        targetSdkVersion Versions.targetSdkVersion
+        versionCode Versions.buildNumber
+        versionName Versions.apkVersion
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled true
+            shrinkResources true
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    sourceSets {
+        main.java.srcDirs += 'src/main/kotlin'
+        test.java.srcDirs += 'src/test/kotlin'
+    }
+
+    kapt {
+        correctErrorTypes = true
+    }
+
+    android.applicationVariants.all { variant ->
+        variant.outputs.all {
+            outputFileName = "${Versions.apkNamePrefix}-${Versions.apkVersion}.apk"
+        }
+    }
+
+    lintOptions {
+        checkReleaseBuilds false
+        // Or, if you prefer, you can continue to check for errors in release builds,
+        // but continue the build even when errors are found:
+        abortOnError false
+    }
+}
+
+dependencies {
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
+
+    implementation project(':data')
+
+    // Google
+    implementation Libs.supportLib
+    implementation Libs.recyclerView
+    implementation Libs.cardView
+    implementation Libs.supportDesign
+
+    // Kotlin
+    implementation Libs.kotlin
+
+    // RxJava
+    implementation Libs.rxJava
+    implementation Libs.rxAndroid
+    implementation Libs.rxKotlin
+
+    implementation Libs.dagger
+    kapt Libs.daggerCompiler
+    implementation Libs.daggerAndroidSupport
+    kapt Libs.daggerAndroidProcessor
+
+    //Glide
+    implementation Libs.glide
+    implementation Libs.glideIntegration
+    kapt Libs.glideCompiler
+
+    implementation Libs.adapterDelegates
+
+    // Development
+    implementation Libs.rxLint
+    debugImplementation Libs.debugDb
+}
