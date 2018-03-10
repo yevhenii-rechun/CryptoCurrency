@@ -1,3 +1,12 @@
 <resources>
     <string name="app_name">CryptoCurrencyRates</string>
+
+    <string name="activity_chosen_currencies_title">Chosen crypto</string>
+    <string name="activity_chosen_currencies_no_items_message">Add at least one currency</string>
+
+    <string name="activity_choose_currency_title">Choose crypto</string>
+
+    <string name="activity_choose_exchange_rate_title">Exchange rates</string>
+
+    <string name="content_description_currency_logo">Currency logo</string>
 </resources>

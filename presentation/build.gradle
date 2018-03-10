@@ -48,6 +48,11 @@ dependencies {
 
     implementation project(':data')
 
+    //Arch Components
+    implementation Libs.archComponentsExtensions
+    implementation Libs.archComponentsViewModel
+    annotationProcessor Libs.archComponentsCompiler
+
     // Google
     implementation Libs.supportLib
     implementation Libs.recyclerView
@@ -73,6 +78,8 @@ dependencies {
     kapt Libs.glideCompiler
 
     implementation Libs.adapterDelegates
+
+    implementation Libs.stateView
 
     // Development
     implementation Libs.rxLint
