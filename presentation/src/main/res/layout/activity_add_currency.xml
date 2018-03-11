@@ -18,6 +18,15 @@
             android:background="?colorPrimary"
             app:popupTheme="@style/CryptoExchange.ToolbarPopupOverlay">
 
+            <!--<SearchView-->
+            <!--android:id="@+id/item_search"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:gravity="right"-->
+            <!--android:iconifiedByDefault="false"-->
+            <!--android:queryHint="Search"-->
+            <!--android:searchIcon="@drawable/ic_search" />-->
+
         </android.support.v7.widget.Toolbar>
 
     </android.support.design.widget.AppBarLayout>

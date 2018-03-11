@@ -10,6 +10,8 @@ import com.zetokz.cryptocurrencyrates.base.BaseViewModel
 
 fun FragmentActivity.currentFragment() = supportFragmentManager.fragments?.filter { it.isVisible }?.firstOrNull()
 
+fun <T> List<T>.hasElement(predicate: (T) -> Boolean) = firstOrNull(predicate) != null
+
 inline fun <reified T : Fragment> AppCompatActivity.findFragmentByType() = supportFragmentManager.fragments
     ?.filter { it is T }
     ?.map { it as T }

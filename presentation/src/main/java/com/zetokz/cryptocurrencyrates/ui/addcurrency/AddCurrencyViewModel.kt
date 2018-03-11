@@ -6,6 +6,7 @@ import com.zetokz.cryptocurrencyrates.ui.model.toCurrencySelectableItems
 import com.zetokz.data.interactor.CurrencyRatesInteractor
 import com.zetokz.data.model.Currency
 import io.reactivex.Completable
+import io.reactivex.Observable
 import io.reactivex.rxkotlin.Singles
 import io.reactivex.rxkotlin.addTo
 import io.reactivex.schedulers.Schedulers
@@ -26,6 +27,7 @@ class AddCurrencyViewModel @Inject constructor(
     val currencyItemSelect = PublishSubject.create<CurrencyItemSelectable>()
     val saveCurrencies = PublishSubject.create<Boolean>()
     val clickBack = PublishSubject.create<Boolean>()
+    val filterCurrency = PublishSubject.create<String>()
 
     private lateinit var rawCurrency: List<Currency>
     private var needToShowSaveChangesDialog: Boolean = false
@@ -60,6 +62,19 @@ class AddCurrencyViewModel @Inject constructor(
                 if (isNeedToShowDialog) addCurrencyRouter.showCloseDialog()
                 else addCurrencyRouter.close()
             }, ::handleCommonError)
+            .addTo(disposables)
+
+        filterCurrency.subscribeOn(Schedulers.io())
+            .flatMap(
+                { Observable.just(rawCurrency) },
+                { query, currencies -> currencies.filter { it.name.contains(query, ignoreCase = true) } }
+            )
+            .map { it.toCurrencySelectableItems() }
+            //todo add selection to filtered items
+//            .concatMapIterable { it }
+//            .map { item -> item.apply { isSelected = currenciesToSave.hasElement { it.name == item.shortName } } }
+//            .toList()
+            .subscribe(currenciesData::onNext, ::handleCommonError)
             .addTo(disposables)
     }
 

@@ -5,11 +5,36 @@
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
+
+        //todo verify this
+        <item name="android:editTextColor">@color/colorAccent</item>
+        <item name="android:textColorHint">@color/colorAccent</item>
+        <item name="android:searchViewStyle">@style/SearchAutoCompleteTextView</item>
+        <item name="android:actionBarWidgetTheme">@style/Theme.MyTheme.Widget</item>
+
+        <item name="autoCompleteTextViewStyle">@style/SearchAutoCompleteTextView</item>
+
+    </style>
+
+    <style name="Theme.MyTheme.Widget" parent="@android:style/Theme.Holo">
+        <item name="autoCompleteTextViewStyle">@style/SearchAutoCompleteTextView</item>
+        <item name="android:editTextColor">@color/colorAccent</item>
+        <item name="android:textColorHint">@color/colorAccent</item>
+        <item name="android:searchIcon">@drawable/ic_search</item>
+        <!-- your other custom widget styles -->
+    </style>
+
+    <style name="SearchAutoCompleteTextView" parent="Widget.AppCompat.Light.AutoCompleteTextView">
+        <item name="android:textColor">@color/colorAccent</item>
+        <item name="android:textColorHint">@color/colorAccentLight</item>
+        <item name="android:searchIcon">@drawable/ic_search</item>
+        <item name="android:closeIcon">@drawable/ic_clear</item>
+        <item name="android:textColorSecondary">@color/colorAccent</item>
     </style>
 
     <style name="CryptoExchange.AlertDialogTheme.Progress" parent="Theme.AppCompat.Light.Dialog.Alert">
         <item name="android:windowExitAnimation">@android:anim/fade_out</item>
-        <item name="colorAccent">@color/colorPrimary</item>
+        <item name="colorAccent">@color/colorAccent</item>
     </style>
 
     <style name="CryptoExchange.Toolbar">

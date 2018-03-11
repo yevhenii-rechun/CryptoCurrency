@@ -24,8 +24,7 @@
         </activity>
         <activity
             android:name=".ui.addcurrency.AddCurrencyActivity"
-            android:label="@string/activity_choose_currency_title"
-            android:theme="@style/CryptoExchange" />
+            android:label="@string/activity_choose_currency_title" />
     </application>
 
 </manifest>

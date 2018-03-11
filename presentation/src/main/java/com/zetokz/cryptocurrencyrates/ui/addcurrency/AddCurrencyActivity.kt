@@ -8,6 +8,8 @@ import android.support.design.widget.FloatingActionButton
 import android.support.v7.app.AlertDialog
 import android.support.v7.widget.RecyclerView
 import android.support.v7.widget.Toolbar
+import android.view.Menu
+import android.widget.SearchView
 import bindView
 import com.kennyc.view.MultiStateView
 import com.zetokz.cryptocurrencyrates.R
@@ -22,6 +24,7 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.rxkotlin.addTo
 import io.reactivex.schedulers.Schedulers
 import javax.inject.Inject
+
 
 class AddCurrencyActivity : BaseActivity(), AddCurrencyRouter {
 
@@ -90,6 +93,25 @@ class AddCurrencyActivity : BaseActivity(), AddCurrencyRouter {
     private fun initToolbar() {
         setSupportActionBar(toolbar)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        supportActionBar?.setHomeAsUpIndicator(R.drawable.ic_home_indicator)
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.menu_search, menu)
+        val searchBar = menu?.findItem(R.id.item_search)
+        val searchView = searchBar?.actionView as SearchView
+        searchView.queryHint = getString(R.string.activity_choose_currency_search_hint)
+        searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(query: String?) = true
+
+            override fun onQueryTextChange(newText: String?): Boolean {
+                newText?.let(viewModel.filterCurrency::onNext)
+                return true
+            }
+        })
+        searchView.isIconified = true
+
+        return true
     }
 
     private fun initAdapter() {
