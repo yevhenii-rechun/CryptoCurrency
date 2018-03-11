@@ -35,7 +35,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical"
-            app:msv_emptyView="@layout/layout_no_chosen_currencies"
+            app:msv_errorView="@layout/layout_error"
             app:msv_loadingView="@layout/layout_default_progress"
             app:msv_viewState="loading">
 
@@ -53,11 +53,11 @@
     </LinearLayout>
 
     <android.support.design.widget.FloatingActionButton
-        android:id="@+id/button_add"
+        android:id="@+id/button_save"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"
         android:layout_margin="@dimen/normal"
-        android:src="@drawable/ic_add" />
+        android:src="@drawable/ic_save" />
 
 </android.support.design.widget.CoordinatorLayout>

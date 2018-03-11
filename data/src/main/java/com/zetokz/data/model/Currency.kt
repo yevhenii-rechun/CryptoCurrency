@@ -2,7 +2,6 @@ package com.zetokz.data.model
 
 import android.arch.persistence.room.Entity
 import android.arch.persistence.room.PrimaryKey
-import com.google.gson.annotations.SerializedName
 
 /**
  * Created by Yevhenii Rechun on 1/17/18.
@@ -12,18 +11,18 @@ import com.google.gson.annotations.SerializedName
 data class Currency(
     @PrimaryKey
     val id: String,
-    @SerializedName("Url") val url: String,
-    @SerializedName("ImageUrl") val imageUrl: String,
-    @SerializedName("Name") val name: String,
-    @SerializedName("Symbol") val symbol: String,
-    @SerializedName("CoinName") val coinName: String,
-    @SerializedName("FullName") val fullName: String,
-    @SerializedName("Algorithm") val algorithm: String,
-    @SerializedName("ProofType") val proofType: String,
-    @SerializedName("FullyPremined") val fullyPremined: String,
-    @SerializedName("TotalCoinSupply") val totalCoinSupply: String,
-    @SerializedName("PreMinedValue") val preminedValue: String,
-    @SerializedName("TotalCoinsFreeFloat") val totalCoinsFreeFloat: String,
-    @SerializedName("SortOrder") val sortOrder: String,
-    @SerializedName("Sponsored") val sponsored: Boolean
+    val url: String,
+    val imageUrl: String,
+    val name: String,
+    val symbol: String,
+    val coinName: String,
+    val fullName: String,
+    val algorithm: String,
+    val proofType: String,
+    val fullyPremined: String,
+    val totalCoinSupply: String,
+    val preminedValue: String?,
+    val totalCoinsFreeFloat: String,
+    val sortOrder: String,
+    val sponsored: Boolean
 )

@@ -2,6 +2,8 @@ package com.zetokz.cryptocurrencyrates.injection
 
 import android.arch.lifecycle.ViewModelProvider
 import com.zetokz.cryptocurrencyrates.base.ViewModelFactory
+import com.zetokz.cryptocurrencyrates.ui.addcurrency.AddCurrencyActivity
+import com.zetokz.cryptocurrencyrates.ui.addcurrency.AddCurrencyModule
 import com.zetokz.cryptocurrencyrates.ui.main.ChosenCurrenciesActivity
 import com.zetokz.cryptocurrencyrates.ui.main.ChosenCurrenciesModule
 import dagger.Binds
@@ -20,6 +22,9 @@ interface ActivitiesModule {
 
     @ActivityScope @ContributesAndroidInjector(modules = [ChosenCurrenciesModule::class])
     fun contributeChosenCurrenciesActivity(): ChosenCurrenciesActivity
+
+    @ActivityScope @ContributesAndroidInjector(modules = [AddCurrencyModule::class])
+    fun contributeAddCurrencyActivity(): AddCurrencyActivity
 
 //    @ActivityScope @ContributesAndroidInjector
 //    fun contributeCurrencyDetailsActivity(): CurrencyDetailsActivity

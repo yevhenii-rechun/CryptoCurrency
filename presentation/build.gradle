@@ -51,6 +51,7 @@ dependencies {
     //Arch Components
     implementation Libs.archComponentsExtensions
     implementation Libs.archComponentsViewModel
+    implementation 'com.android.support.constraint:constraint-layout:1.0.2'
     annotationProcessor Libs.archComponentsCompiler
 
     // Google
@@ -85,3 +86,4 @@ dependencies {
     implementation Libs.rxLint
     debugImplementation Libs.debugDb
 }
+apply plugin: 'kotlin-android-extensions'

@@ -7,7 +7,7 @@ import com.zetokz.cryptocurrencyrates.ui.model.Identifiable
  * Created by Yevhenii Rechun on 11/27/17.
  * Copyright © 2017. All rights reserved.
  */
-class SimpleDiffUtilCallback(
+open class SimpleDiffUtilCallback(
     private val oldData: List<Identifiable>,
     private val newData: List<Identifiable>
 ) : DiffUtil.Callback() {

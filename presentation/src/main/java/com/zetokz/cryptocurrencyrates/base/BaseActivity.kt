@@ -17,7 +17,8 @@ abstract class BaseActivity : AppCompatActivity(), Injectable {
         super.onDestroy()
     }
 
-    fun close() {
-        finish()
+    override fun onSupportNavigateUp(): Boolean {
+        onBackPressed()
+        return true
     }
 }

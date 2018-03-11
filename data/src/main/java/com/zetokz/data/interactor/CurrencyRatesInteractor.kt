@@ -3,6 +3,7 @@ package com.zetokz.data.interactor
 import com.zetokz.data.model.Conversion
 import com.zetokz.data.model.Currency
 import com.zetokz.data.repository.CurrencyRatesRepository
+import io.reactivex.Flowable
 import io.reactivex.Single
 import javax.inject.Inject
 
@@ -14,7 +15,10 @@ class CurrencyRatesInteractor @Inject constructor(
     private val currencyRatesRepository: CurrencyRatesRepository
 ) {
 
-    fun getChosenCurrencies(): Single<List<Currency>> =
+    fun saveCurrencies(currencies: List<Currency>) =
+        currencyRatesRepository.saveCurrencies(currencies)
+
+    fun getChosenCurrencies(): Flowable<List<Currency>> =
         currencyRatesRepository.getChosenCurrencies()
 
     fun getAvailableCurrencies(): Single<List<Currency>> =

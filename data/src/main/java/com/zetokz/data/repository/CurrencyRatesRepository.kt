@@ -1,6 +1,8 @@
 package com.zetokz.data.repository
 
 import com.zetokz.data.model.Currency
+import io.reactivex.Completable
+import io.reactivex.Flowable
 import io.reactivex.Single
 
 /**
@@ -11,5 +13,7 @@ interface CurrencyRatesRepository {
 
     fun getAvailableCurrencies(): Single<List<Currency>>
 
-    fun getChosenCurrencies(): Single<List<Currency>>
+    fun getChosenCurrencies(): Flowable<List<Currency>>
+
+    fun saveCurrencies(currencies: List<Currency>): Completable
 }

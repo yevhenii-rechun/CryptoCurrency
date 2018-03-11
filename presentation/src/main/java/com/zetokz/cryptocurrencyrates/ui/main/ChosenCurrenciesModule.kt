@@ -19,7 +19,6 @@ abstract class ChosenCurrenciesModule {
     @ViewModelKey(ChosenCurrenciesViewModel::class)
     abstract fun bindsChosenCurrenciesViewModel(chosenCurrenciesViewModel: ChosenCurrenciesViewModel): ViewModel
 
-
     @Module
     companion object {
 

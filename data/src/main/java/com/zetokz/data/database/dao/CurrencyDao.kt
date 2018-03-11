@@ -5,7 +5,7 @@ import android.arch.persistence.room.Insert
 import android.arch.persistence.room.OnConflictStrategy
 import android.arch.persistence.room.Query
 import com.zetokz.data.model.Currency
-import io.reactivex.Single
+import io.reactivex.Flowable
 
 /**
  * Created by Yevhenii Rechun on 11/28/17.
@@ -18,5 +18,5 @@ internal abstract class CurrencyDao : BaseDao<Currency> {
     abstract fun bulkInsert(currencies: List<Currency>)
 
     @Query("SELECT * FROM currencies")
-    abstract fun findAll(): Single<List<Currency>>
+    abstract fun findAll(): Flowable<List<Currency>>
 }

@@ -4,7 +4,6 @@ import io.reactivex.Flowable
 import io.reactivex.FlowableTransformer
 import io.reactivex.Observable
 import io.reactivex.ObservableTransformer
-import io.reactivex.android.schedulers.AndroidSchedulers.mainThread
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.disposables.Disposable
 import java.util.concurrent.TimeUnit
@@ -32,8 +31,8 @@ private fun <T : Any> applyThrottlingFlowable(): FlowableTransformer<T, T> = Flo
     it.throttleFirst(DEBOUNCE_DELAY_MS, TimeUnit.MILLISECONDS)
 }
 
-fun <T> Observable<T>.subscribeForUiData(
+fun <T> Observable<T>.subscribeNoError(
     onNext: (T) -> Unit,
     onError: (Throwable) -> Unit = { it.printStackTrace() }
-): Disposable = this.subscribeOn(mainThread()).subscribe(onNext, onError)
+): Disposable = this.subscribe(onNext, onError)
 

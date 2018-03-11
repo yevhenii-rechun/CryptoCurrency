@@ -1,5 +1,6 @@
 package com.zetokz.cryptocurrencyrates.ui.model
 
+import com.zetokz.data.RestConfig
 import com.zetokz.data.model.Currency
 
 /**
@@ -7,6 +8,11 @@ import com.zetokz.data.model.Currency
  * Copyright © 2017. All rights reserved.
  */
 
-fun Currency.toCurrencyItem() = CurrencyItem(imageUrl, name, fullName)
+fun Currency.toCurrencyItem() = CurrencyItem(RestConfig.IMAGE_BASE_URL + imageUrl, name, fullName)
 
 fun List<Currency>.toCurrencyItems() = asSequence().map { it.toCurrencyItem() }.toList()
+
+fun Currency.toCurrencySelectableItem() =
+    CurrencyItemSelectable(RestConfig.IMAGE_BASE_URL + imageUrl, name, fullName, false)
+
+fun List<Currency>.toCurrencySelectableItems() = asSequence().map { it.toCurrencySelectableItem() }.toList()

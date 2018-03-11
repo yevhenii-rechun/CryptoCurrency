@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:id="@+id/icon_crypto_logo"
+            android:layout_width="@dimen/icon_default_size"
+            android:layout_height="@dimen/icon_default_size"
+            android:layout_margin="@dimen/normal"
+            android:contentDescription="@string/content_description_currency_logo"
+            tools:src="@tools:sample/avatars" />
+
+        <TextView
+            android:id="@+id/text_currency_name_short"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignTop="@+id/icon_crypto_logo"
+            android:layout_toEndOf="@+id/icon_crypto_logo"
+            android:layout_toStartOf="@+id/label_chosen_currency"
+            android:ellipsize="end"
+            android:textAppearance="@style/CryptoExchange.TextAppearance.Regular.Bold"
+            tools:text="USD" />
+
+        <TextView
+            android:id="@+id/text_currency_name_full"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/icon_crypto_logo"
+            android:layout_alignEnd="@+id/label_chosen_currency"
+            android:layout_toEndOf="@+id/icon_crypto_logo"
+            android:ellipsize="end"
+            tools:text="USD" />
+
+        <TextView
+            android:id="@+id/label_chosen_currency"
+            style="@style/CryptoExchange.Label.ChosenCurrency"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignTop="@+id/text_currency_name_short"
+            android:layout_marginEnd="@dimen/normal"
+            android:padding="@dimen/tiny"
+            android:text="@string/activity_choose_currency_item_text_chosen"
+            android:visibility="gone"
+            tools:visibility="visible" />
+
+    </RelativeLayout>
+
+</android.support.v7.widget.CardView>

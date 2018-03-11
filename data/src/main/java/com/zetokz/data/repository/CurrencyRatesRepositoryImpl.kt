@@ -4,6 +4,8 @@ import com.zetokz.data.database.dao.CurrencyDao
 import com.zetokz.data.model.Currency
 import com.zetokz.data.network.CurrencyRateService
 import dagger.Reusable
+import io.reactivex.Completable
+import io.reactivex.Flowable
 import io.reactivex.Single
 import io.reactivex.schedulers.Schedulers
 import javax.inject.Inject
@@ -23,6 +25,10 @@ internal class CurrencyRatesRepositoryImpl @Inject constructor(
             .map { it.data.asSequence().map { it.value }.toList() }
             .subscribeOn(Schedulers.io())
 
-    override fun getChosenCurrencies(): Single<List<Currency>> = currencyDao.findAll()
+    override fun getChosenCurrencies(): Flowable<List<Currency>> = currencyDao.findAll()
         .subscribeOn(Schedulers.io())
+
+    override fun saveCurrencies(currencies: List<Currency>) =
+        Completable.fromAction { currencyDao.bulkInsert(currencies) }
+            .subscribeOn(Schedulers.io())
 }
