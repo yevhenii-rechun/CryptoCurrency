@@ -7,6 +7,11 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
+    <style name="CryptoExchange.AlertDialogTheme.Progress" parent="Theme.AppCompat.Light.Dialog.Alert">
+        <item name="android:windowExitAnimation">@android:anim/fade_out</item>
+        <item name="colorAccent">@color/colorPrimary</item>
+    </style>
+
     <style name="CryptoExchange.Toolbar">
         <item name="titleTextAppearance">@style/ToolbarTextAppearance.Title</item>
     </style>

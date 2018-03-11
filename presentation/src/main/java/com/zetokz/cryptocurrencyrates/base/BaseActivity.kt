@@ -1,7 +1,10 @@
 package com.zetokz.cryptocurrencyrates.base
 
 import android.support.v7.app.AppCompatActivity
+import com.zetokz.cryptocurrencyrates.R
 import com.zetokz.cryptocurrencyrates.injection.Injectable
+import com.zetokz.cryptocurrencyrates.util.extension.hideBlockingProgressDialog
+import com.zetokz.cryptocurrencyrates.util.extension.showBlockingProgressDialog
 import io.reactivex.disposables.CompositeDisposable
 
 /**
@@ -11,6 +14,14 @@ import io.reactivex.disposables.CompositeDisposable
 abstract class BaseActivity : AppCompatActivity(), Injectable {
 
     protected val disposables: CompositeDisposable by lazy { CompositeDisposable() }
+
+    fun showBlockingProgress() {
+        showBlockingProgressDialog(getString(R.string.loading))
+    }
+
+    fun hideBlockingProgress() {
+        hideBlockingProgressDialog()
+    }
 
     override fun onDestroy() {
         disposables.clear()

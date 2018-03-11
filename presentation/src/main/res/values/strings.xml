@@ -2,16 +2,21 @@
     <string name="app_name">CryptoCurrencyRates</string>
 
     <string name="action_refresh">Refresh</string>
+    <string name="action_exig">Exit</string>
+    <string name="action_save">Save</string>
 
     <string name="activity_chosen_currencies_title">Chosen crypto</string>
     <string name="activity_chosen_currencies_no_items_message">Add at least one currency</string>
 
     <string name="activity_choose_currency_title">Choose crypto</string>
     <string name="activity_choose_currency_item_text_chosen">Chosen</string>
+    <string name="activity_choose_currency_dialog_close_without_saving_message">Do you want to exit without saving?</string>
 
     <string name="activity_choose_currency_error_message">Currencies can not be loaded now\nPlease, check you internet connection and try again</string>
 
     <string name="activity_choose_exchange_rate_title">Exchange rates</string>
 
     <string name="content_description_currency_logo">Currency logo</string>
+
+    <string name="loading">Loading</string>
 </resources>

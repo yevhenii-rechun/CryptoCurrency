@@ -1,14 +1,24 @@
 package com.zetokz.cryptocurrencyrates.util.extension
 
+import android.content.Context
 import android.view.View
 import android.widget.ImageView
 import com.bumptech.glide.Glide
 import com.kennyc.view.MultiStateView
+import com.zetokz.cryptocurrencyrates.util.ProgressBarController
 
 /**
  * Created by Yevhenii Rechun on 1/18/18.
  * Copyright © 2017. All rights reserved.
  */
+
+internal fun Context.showBlockingProgressDialog(message: String? = null) {
+    ProgressBarController.showProgressDialog(this, message)
+}
+
+internal fun Context.hideBlockingProgressDialog() {
+    ProgressBarController.hideProgressDialog()
+}
 
 internal fun View.changeVisibility(visible: Boolean, keep: Boolean = false) {
     visibility = when {

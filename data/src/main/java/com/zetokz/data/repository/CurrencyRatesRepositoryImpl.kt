@@ -29,6 +29,6 @@ internal class CurrencyRatesRepositoryImpl @Inject constructor(
         .subscribeOn(Schedulers.io())
 
     override fun saveCurrencies(currencies: List<Currency>) =
-        Completable.fromAction { currencyDao.bulkInsert(currencies) }
+        Completable.fromAction { currencyDao.updateChosenCurrencies(currencies) }
             .subscribeOn(Schedulers.io())
 }

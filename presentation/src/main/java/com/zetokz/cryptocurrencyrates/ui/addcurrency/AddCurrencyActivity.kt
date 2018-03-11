@@ -5,6 +5,7 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.support.design.widget.FloatingActionButton
+import android.support.v7.app.AlertDialog
 import android.support.v7.widget.RecyclerView
 import android.support.v7.widget.Toolbar
 import bindView
@@ -22,7 +23,7 @@ import io.reactivex.rxkotlin.addTo
 import io.reactivex.schedulers.Schedulers
 import javax.inject.Inject
 
-class AddCurrencyActivity : BaseActivity() {
+class AddCurrencyActivity : BaseActivity(), AddCurrencyRouter {
 
     companion object {
 
@@ -49,6 +50,30 @@ class AddCurrencyActivity : BaseActivity() {
         initViews()
 
         observeData()
+    }
+
+    override fun close() {
+        finish()
+    }
+
+    override fun showCloseDialog() {
+        AlertDialog.Builder(this)
+            .setMessage(R.string.activity_choose_currency_dialog_close_without_saving_message)
+            .setPositiveButton(R.string.action_save, { _, _ -> viewModel.saveCurrencies.onNext(true) })
+            .setNegativeButton(R.string.action_exig, { _, _ -> viewModel.saveCurrencies.onNext(false) })
+            .show()
+    }
+
+    override fun showProgress() {
+        showBlockingProgress()
+    }
+
+    override fun hideProgress() {
+        hideBlockingProgress()
+    }
+
+    override fun onBackPressed() {
+        viewModel.clickBack.onNext(true)
     }
 
     private fun observeData() {
@@ -81,7 +106,7 @@ class AddCurrencyActivity : BaseActivity() {
             })
         }
 
-        buttonSave.setOnClickListener { viewModel.clickSave.onNext(true) }
+        buttonSave.setOnClickListener { viewModel.saveCurrencies.onNext(true) }
     }
 
 }

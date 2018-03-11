@@ -3,6 +3,7 @@ package com.zetokz.cryptocurrencyrates
 import com.zetokz.cryptocurrencyrates.injection.AppComponent
 import com.zetokz.cryptocurrencyrates.injection.DaggerAppComponent
 import com.zetokz.cryptocurrencyrates.injection.applyAutoInjector
+import com.zetokz.cryptocurrencyrates.util.ProgressBarController
 import dagger.android.support.DaggerApplication
 
 /**
@@ -20,6 +21,8 @@ class App : DaggerApplication() {
     override fun onCreate() {
         super.onCreate()
         applyAutoInjector()
+
+        ProgressBarController.init(this)
 
         instance = this
     }

@@ -34,5 +34,5 @@ private fun <T : Any> applyThrottlingFlowable(): FlowableTransformer<T, T> = Flo
 fun <T> Observable<T>.subscribeNoError(
     onNext: (T) -> Unit,
     onError: (Throwable) -> Unit = { it.printStackTrace() }
-): Disposable = this.subscribe(onNext, onError)
+): Disposable = subscribe(onNext, onError)
 

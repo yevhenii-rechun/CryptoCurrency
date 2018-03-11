@@ -5,6 +5,7 @@ import com.zetokz.cryptocurrencyrates.injection.ActivityScope
 import com.zetokz.cryptocurrencyrates.injection.ViewModelKey
 import dagger.Binds
 import dagger.Module
+import dagger.Provides
 import dagger.multibindings.IntoMap
 
 /**
@@ -17,5 +18,13 @@ abstract class AddCurrencyModule {
     @Binds @IntoMap @ActivityScope
     @ViewModelKey(AddCurrencyViewModel::class)
     abstract fun bindsAddCurrencyViewModel(addCurrencyViewModel: AddCurrencyViewModel): ViewModel
+
+    @Module
+    companion object {
+
+        @Provides @ActivityScope @JvmStatic
+        fun provideAddCurrencyRouter(addCurrencyActivity: AddCurrencyActivity): AddCurrencyRouter =
+            addCurrencyActivity
+    }
 
 }
