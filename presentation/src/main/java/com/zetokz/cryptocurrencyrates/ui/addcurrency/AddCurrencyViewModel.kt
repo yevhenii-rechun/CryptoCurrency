@@ -3,10 +3,12 @@ package com.zetokz.cryptocurrencyrates.ui.addcurrency
 import com.zetokz.cryptocurrencyrates.base.BaseViewModel
 import com.zetokz.cryptocurrencyrates.ui.model.CurrencyItemSelectable
 import com.zetokz.cryptocurrencyrates.ui.model.toCurrencySelectableItems
+import com.zetokz.cryptocurrencyrates.util.extension.hasElement
 import com.zetokz.data.interactor.CurrencyRatesInteractor
 import com.zetokz.data.model.Currency
 import io.reactivex.Completable
 import io.reactivex.Observable
+import io.reactivex.Single
 import io.reactivex.rxkotlin.Singles
 import io.reactivex.rxkotlin.addTo
 import io.reactivex.schedulers.Schedulers
@@ -27,7 +29,7 @@ class AddCurrencyViewModel @Inject constructor(
     val currencyItemSelect = PublishSubject.create<CurrencyItemSelectable>()
     val saveCurrencies = PublishSubject.create<Boolean>()
     val clickBack = PublishSubject.create<Boolean>()
-    val filterCurrency = PublishSubject.create<String>()
+    val filterCurrency = BehaviorSubject.create<String>()
 
     private lateinit var rawCurrency: List<Currency>
     private var needToShowSaveChangesDialog: Boolean = false
@@ -47,36 +49,31 @@ class AddCurrencyViewModel @Inject constructor(
             .subscribe(currenciesData::onNext, ::handleCommonError)
             .addTo(disposables)
 
-        saveCurrencies.subscribeOn(Schedulers.io())
+        saveCurrencies
+            .subscribeOn(Schedulers.io())
             .flatMapCompletable {
                 (if (it) currencyRatesInteractor.saveCurrencies(currenciesToSave) else Completable.complete())
                     .doOnComplete(saveCurrencies::onComplete)
-                //todo verify this strange behavior
             }
             .subscribe(addCurrencyRouter::close, ::handleCommonError)
             .addTo(disposables)
 
-        clickBack.subscribeOn(Schedulers.io())
+        clickBack
+            .subscribeOn(Schedulers.io())
             .map { needToShowSaveChangesDialog }
             .subscribe({ isNeedToShowDialog ->
                 if (isNeedToShowDialog) addCurrencyRouter.showCloseDialog()
                 else addCurrencyRouter.close()
             }, ::handleCommonError)
             .addTo(disposables)
-
-        filterCurrency.subscribeOn(Schedulers.io())
-            .flatMap(
-                { Observable.just(rawCurrency) },
-                { query, currencies -> currencies.filter { it.name.contains(query, ignoreCase = true) } }
-            )
-            .map { it.toCurrencySelectableItems() }
-            //todo add selection to filtered items
-//            .concatMapIterable { it }
-//            .map { item -> item.apply { isSelected = currenciesToSave.hasElement { it.name == item.shortName } } }
-//            .toList()
-            .subscribe(currenciesData::onNext, ::handleCommonError)
-            .addTo(disposables)
     }
+
+    private fun findAndApplySelection(
+        needToFindSelection: List<CurrencyItemSelectable>,
+        selectedItems: List<Currency>
+    ): Single<List<CurrencyItemSelectable>> = Observable.fromIterable(needToFindSelection)
+        .map { item -> item.apply { isSelected = selectedItems.hasElement { it.name == item.shortName } } }
+        .toList()
 
     private fun loadCurrencies(currencyRatesInteractor: CurrencyRatesInteractor) = Singles.zip(
         currencyRatesInteractor.getAvailableCurrencies()
@@ -85,13 +82,19 @@ class AddCurrencyViewModel @Inject constructor(
         currencyRatesInteractor.getChosenCurrencies()
             .first(listOf())
             .doOnSuccess { currenciesToSave.addAll(it) }
-            .map { it.toCurrencySelectableItems() }
     )
-        .map { (availableCurrencies, savedCurrencies) ->
-            availableCurrencies.apply {
-                forEach { it.isSelected = savedCurrencies.firstOrNull(it::equals) != null }
-            }
-        }
+        .flatMap { (allCurrencies, savedCurrencies) -> findAndApplySelection(allCurrencies, savedCurrencies) }
+        .doOnSuccess { observeSearchFilter() }
+
+    private fun observeSearchFilter() {
+        filterCurrency
+            .subscribeOn(Schedulers.io())
+            .map { query -> rawCurrency.filter { it.name.contains(query, ignoreCase = true) } }
+            .map { it.toCurrencySelectableItems() }
+            .concatMap { findAndApplySelection(it, currenciesToSave).toObservable() }
+            .subscribe(currenciesData::onNext, ::handleCommonError)
+            .addTo(disposables)
+    }
 
     private fun saveAndChangeSelection(item: CurrencyItemSelectable) {
         needToShowSaveChangesDialog = true
@@ -104,7 +107,6 @@ class AddCurrencyViewModel @Inject constructor(
         }
         currenciesData.value.first(item::equals).isSelected = !item.isSelected
     }
-
 }
 
 class EmptyDataError : Exception()
