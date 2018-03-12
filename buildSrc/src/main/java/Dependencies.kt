@@ -1,7 +1,6 @@
 @file:Suppress("unused")
 
 import java.util.Calendar
-import java.util.Date
 
 object Versions {
 
@@ -34,7 +33,8 @@ object Versions {
     const val javaxAnnotation = "1.0"
     const val javaxInject = "1"
 
-    const val archComponents = "1.0.0"
+    const val archComponentsRoom = "1.0.0"
+    const val archComponents = "1.1.0"
 
     const val glide = "4.6.1"
     const val adapterDelegates = "3.0.1"
@@ -49,6 +49,12 @@ object Versions {
 }
 
 object Libs {
+
+    //Architecture Components
+    const val archComponentsExtensions = "android.arch.lifecycle:extensions:${Versions.archComponents}"
+    const val archComponentsViewModel = "android.arch.lifecycle:viewmodel:${Versions.archComponents}"
+    const val archComponentsCompiler = "android.arch.lifecycle:compiler:${Versions.archComponents}"
+
     // Google
     const val supportLib = "com.android.support:support-v4:${Versions.supportLibrary}"
     const val recyclerView = "com.android.support:recyclerview-v7:${Versions.supportLibrary}"
@@ -82,15 +88,17 @@ object Libs {
     const val javaxInject = "javax.inject:javax.inject:${Versions.javaxInject}"
 
     // Room
-    const val roomRuntime = "android.arch.persistence.room:runtime:${Versions.archComponents}"
-    const val roomRxJava = "android.arch.persistence.room:rxjava2:${Versions.archComponents}"
-    const val roomCompiler = "android.arch.persistence.room:compiler:${Versions.archComponents}"
+    const val roomRuntime = "android.arch.persistence.room:runtime:${Versions.archComponentsRoom}"
+    const val roomRxJava = "android.arch.persistence.room:rxjava2:${Versions.archComponentsRoom}"
+    const val roomCompiler = "android.arch.persistence.room:compiler:${Versions.archComponentsRoom}"
 
     const val glide = "com.github.bumptech.glide:glide:${Versions.glide}"
     const val glideCompiler = "com.github.bumptech.glide:compiler:${Versions.glide}"
     const val glideIntegration = "com.github.bumptech.glide:okhttp3-integration:${Versions.glide}"
 
     const val adapterDelegates = "com.hannesdorfmann:adapterdelegates3:${Versions.adapterDelegates}"
+
+    const val stateView = "com.github.Kennyc1012:MultiStateView:${Versions.stateView}"
 
     // Development
     const val rxLint = "nl.littlerobots.rxlint:rxlint:${Versions.rxLint}"
