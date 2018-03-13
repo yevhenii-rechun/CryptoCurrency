@@ -19,6 +19,7 @@ object Versions {
 
     // Libraries
     const val supportLibrary = "27.0.2"
+    const val ktx = "0.2"
 
     const val retrofit = "2.3.0"
     const val okHttp = "3.8.0"
@@ -78,6 +79,7 @@ object Libs {
     const val rxJava = "io.reactivex.rxjava2:rxjava:${Versions.rxJava}"
     const val rxAndroid = "io.reactivex.rxjava2:rxandroid:${Versions.rxAndroid}"
     const val rxKotlin = "io.reactivex.rxjava2:rxkotlin:${Versions.rxKotlin}"
+    const val rxRelay = "com.jakewharton.rxrelay2:rxrelay:2.0.0"
 
     // DI
     const val dagger = "com.google.dagger:dagger:${Versions.dagger}"
@@ -99,6 +101,8 @@ object Libs {
     const val adapterDelegates = "com.hannesdorfmann:adapterdelegates3:${Versions.adapterDelegates}"
 
     const val stateView = "com.github.Kennyc1012:MultiStateView:${Versions.stateView}"
+
+    const val ktx = "androidx.core:core-ktx:${Versions.ktx}"
 
     // Development
     const val rxLint = "nl.littlerobots.rxlint:rxlint:${Versions.rxLint}"

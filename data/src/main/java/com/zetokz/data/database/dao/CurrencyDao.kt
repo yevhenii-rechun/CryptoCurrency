@@ -24,6 +24,9 @@ internal abstract class CurrencyDao : BaseDao<Currency> {
     @Query("SELECT * FROM currencies")
     abstract fun findAll(): Flowable<List<Currency>>
 
+    @Query("DELETE FROM currencies WHERE id = :currencyId")
+    abstract fun deleteCurrencyById(currencyId: Int)
+
     @Transaction open fun updateChosenCurrencies(chosenCurrencies: List<Currency>) {
         deleteAll()
         bulkInsert(chosenCurrencies)

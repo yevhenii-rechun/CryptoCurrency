@@ -1,4 +1,4 @@
-package com.zetokz.cryptocurrencyrates.ui.main
+package com.zetokz.cryptocurrencyrates.ui.chosencurrencies
 
 import android.arch.lifecycle.ViewModel
 import com.zetokz.cryptocurrencyrates.injection.ActivityScope

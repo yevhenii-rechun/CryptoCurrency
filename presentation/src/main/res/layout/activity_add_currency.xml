@@ -18,61 +18,44 @@
             android:background="?colorPrimary"
             app:popupTheme="@style/CryptoExchange.ToolbarPopupOverlay">
 
-            <!--<SearchView-->
-            <!--android:id="@+id/item_search"-->
-            <!--android:layout_width="wrap_content"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:gravity="right"-->
-            <!--android:iconifiedByDefault="false"-->
-            <!--android:queryHint="Search"-->
-            <!--android:searchIcon="@drawable/ic_search" />-->
-
         </android.support.v7.widget.Toolbar>
 
     </android.support.design.widget.AppBarLayout>
 
-    <LinearLayout
+    <com.kennyc.view.MultiStateView xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/multi_state_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:animateLayoutChanges="true"
         android:orientation="vertical"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        app:msv_errorView="@layout/layout_error"
+        app:msv_loadingView="@layout/layout_default_progress"
+        app:msv_viewState="loading">
 
-        <com.kennyc.view.MultiStateView xmlns:android="http://schemas.android.com/apk/res/android"
-            xmlns:app="http://schemas.android.com/apk/res-auto"
-            android:id="@+id/multi_state_view"
+        <FrameLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical"
-            app:msv_errorView="@layout/layout_error"
-            app:msv_loadingView="@layout/layout_default_progress"
-            app:msv_viewState="loading">
+            android:layout_height="match_parent">
 
-            <FrameLayout
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/list_chosen_currency"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="match_parent"
+                android:clipToPadding="false"
+                app:layoutManager="LinearLayoutManager"
+                app:spanCount="1"
+                tools:listItem="@layout/item_currency" />
 
-                <android.support.v7.widget.RecyclerView
-                    android:id="@+id/list_chosen_currency"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:clipToPadding="false"
-                    app:layoutManager="LinearLayoutManager"
-                    app:spanCount="1"
-                    tools:listItem="@layout/item_currency" />
+            <android.support.design.widget.FloatingActionButton
+                android:id="@+id/button_save"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom|end"
+                android:layout_margin="@dimen/normal"
+                android:src="@drawable/ic_save" />
 
-                <android.support.design.widget.FloatingActionButton
-                    android:id="@+id/button_save"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="bottom|end"
-                    android:layout_margin="@dimen/normal"
-                    android:src="@drawable/ic_save" />
+        </FrameLayout>
 
-            </FrameLayout>
-
-        </com.kennyc.view.MultiStateView>
-
-    </LinearLayout>
+    </com.kennyc.view.MultiStateView>
 
 </android.support.design.widget.CoordinatorLayout>

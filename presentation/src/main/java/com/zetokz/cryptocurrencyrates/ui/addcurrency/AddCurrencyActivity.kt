@@ -8,7 +8,9 @@ import android.support.design.widget.FloatingActionButton
 import android.support.v7.app.AlertDialog
 import android.support.v7.widget.RecyclerView
 import android.support.v7.widget.Toolbar
+import android.support.v7.widget.helper.ItemTouchHelper
 import android.view.Menu
+import android.widget.Button
 import android.widget.SearchView
 import bindView
 import com.kennyc.view.MultiStateView
@@ -16,12 +18,14 @@ import com.zetokz.cryptocurrencyrates.R
 import com.zetokz.cryptocurrencyrates.base.BaseActivity
 import com.zetokz.cryptocurrencyrates.ui.addcurrency.adapter.AvailableCurrenciesAdapter
 import com.zetokz.cryptocurrencyrates.util.extension.getViewModel
+import com.zetokz.cryptocurrencyrates.util.extension.onQueryTextChanged
 import com.zetokz.cryptocurrencyrates.util.extension.showContentState
 import com.zetokz.cryptocurrencyrates.util.extension.showErrorState
-import com.zetokz.cryptocurrencyrates.util.extension.subscribeNoError
+import com.zetokz.cryptocurrencyrates.util.extension.showLoadingState
 import com.zetokz.cryptocurrencyrates.util.list.SpacingItemDecoration
 import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.rxkotlin.addTo
+import io.reactivex.rxkotlin.plusAssign
+import io.reactivex.rxkotlin.subscribeBy
 import io.reactivex.schedulers.Schedulers
 import javax.inject.Inject
 
@@ -37,6 +41,7 @@ class AddCurrencyActivity : BaseActivity(), AddCurrencyRouter {
     private val listCurrencyRates: RecyclerView by bindView(R.id.list_chosen_currency)
     private val multiStateView: MultiStateView by bindView(R.id.multi_state_view)
     private val buttonSave: FloatingActionButton by bindView(R.id.button_save)
+    private val buttonRefresh: Button by bindView(R.id.button_refresh)
 
     @Inject lateinit var factory: ViewModelProvider.Factory
 
@@ -62,8 +67,8 @@ class AddCurrencyActivity : BaseActivity(), AddCurrencyRouter {
     override fun showCloseDialog() {
         AlertDialog.Builder(this)
             .setMessage(R.string.activity_choose_currency_dialog_close_without_saving_message)
-            .setPositiveButton(R.string.action_save, { _, _ -> viewModel.saveCurrencies.onNext(true) })
-            .setNegativeButton(R.string.action_exig, { _, _ -> viewModel.saveCurrencies.onNext(false) })
+            .setPositiveButton(R.string.action_save, { _, _ -> viewModel.saveCurrenciesClick.accept(true) })
+            .setNegativeButton(R.string.action_exig, { _, _ -> viewModel.saveCurrenciesClick.accept(false) })
             .show()
     }
 
@@ -76,18 +81,26 @@ class AddCurrencyActivity : BaseActivity(), AddCurrencyRouter {
     }
 
     override fun onBackPressed() {
-        viewModel.clickBack.onNext(true)
+        viewModel.backButtonClick.accept(true)
     }
 
+    @Suppress("WHEN_ENUM_CAN_BE_NULL_IN_JAVA")
     private fun observeData() {
-        viewModel.currenciesData
+        disposables += viewModel.currenciesData
             .subscribeOn(Schedulers.io())
             .map { it.map { it.copy() } }
             .observeOn(AndroidSchedulers.mainThread())
-            .doOnNext { multiStateView.showContentState() }
-            .doOnError { multiStateView.showErrorState() }
-            .subscribeNoError(currencyRatesAdapter::dispatchNewItems)
-            .addTo(disposables)
+            .subscribeBy(onNext = currencyRatesAdapter::dispatchNewItems)
+
+        disposables += viewModel.viewState
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribeBy(onNext = { currencyViewState ->
+                when (currencyViewState) {
+                    AddCurrencyState.PROGRESS -> multiStateView.showLoadingState()
+                    AddCurrencyState.CONTENT -> multiStateView.showContentState()
+                    AddCurrencyState.ERROR -> multiStateView.showErrorState()
+                }
+            })
     }
 
     private fun initToolbar() {
@@ -98,25 +111,15 @@ class AddCurrencyActivity : BaseActivity(), AddCurrencyRouter {
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.menu_search, menu)
-        val searchBar = menu?.findItem(R.id.item_search)
-        val searchView = searchBar?.actionView as SearchView
+        val searchView = menu?.findItem(R.id.item_search)?.actionView as SearchView
         searchView.queryHint = getString(R.string.activity_choose_currency_search_hint)
-        searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
-            override fun onQueryTextSubmit(query: String?) = true
-
-            override fun onQueryTextChange(newText: String?): Boolean {
-                newText?.let(viewModel.filterCurrency::onNext)
-                return true
-            }
-        })
+        searchView.onQueryTextChanged({ newQuery -> newQuery?.let(viewModel.filterCurrencyName::accept) })
         searchView.isIconified = true
-
         return true
     }
 
     private fun initAdapter() {
-        currencyRatesAdapter =
-                AvailableCurrenciesAdapter { viewModel.currencyItemSelect.onNext(it) }
+        currencyRatesAdapter = AvailableCurrenciesAdapter(viewModel.currencyItemSelect::accept)
     }
 
     private fun initViews() {
@@ -128,7 +131,26 @@ class AddCurrencyActivity : BaseActivity(), AddCurrencyRouter {
             })
         }
 
-        buttonSave.setOnClickListener { viewModel.saveCurrencies.onNext(true) }
+        val itemTouchHelperCallback =
+            object : ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT and ItemTouchHelper.RIGHT) {
+                override fun onMove(
+                    recyclerView: RecyclerView,
+                    viewHolder: RecyclerView.ViewHolder,
+                    target: RecyclerView.ViewHolder
+                ): Boolean {
+                    return false
+                }
+
+                override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
+//                    viewModel.removeCurrency.accept(currencyRatesAdapter.items[viewHolder.adapterPosition])
+                }
+            }
+
+        ItemTouchHelper(itemTouchHelperCallback).attachToRecyclerView(listCurrencyRates)
+
+
+        buttonSave.setOnClickListener { viewModel.saveCurrenciesClick.accept(true) }
+        buttonRefresh.setOnClickListener { viewModel.refreshDataClick.accept(true) }
     }
 
 }

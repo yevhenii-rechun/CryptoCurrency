@@ -31,4 +31,9 @@ internal class CurrencyRatesRepositoryImpl @Inject constructor(
     override fun saveCurrencies(currencies: List<Currency>) =
         Completable.fromAction { currencyDao.updateChosenCurrencies(currencies) }
             .subscribeOn(Schedulers.io())
+
+    override fun removeCurrencyById(currencyId: Int) =
+        Completable.fromAction { currencyDao.deleteCurrencyById(currencyId) }
+            .subscribeOn(Schedulers.io())
+
 }

@@ -8,11 +8,11 @@ import com.zetokz.data.model.Currency
  * Copyright © 2017. All rights reserved.
  */
 
-fun Currency.toCurrencyItem() = CurrencyItem(RestConfig.IMAGE_BASE_URL + imageUrl, name, fullName)
+fun Currency.toCurrencyItem() = CurrencyItem(id.toLong(), RestConfig.IMAGE_BASE_URL + imageUrl, name, fullName)
 
-fun List<Currency>.toCurrencyItems() = asSequence().map { it.toCurrencyItem() }.toList()
+fun List<Currency>.toCurrencyItems() = asSequence().map(Currency::toCurrencyItem).toList()
 
 fun Currency.toCurrencySelectableItem() =
     CurrencyItemSelectable(RestConfig.IMAGE_BASE_URL + imageUrl, name, fullName, false)
 
-fun List<Currency>.toCurrencySelectableItems() = asSequence().map { it.toCurrencySelectableItem() }.toList()
+fun List<Currency>.toCurrencySelectableItems() = asSequence().map(Currency::toCurrencySelectableItem).toList()

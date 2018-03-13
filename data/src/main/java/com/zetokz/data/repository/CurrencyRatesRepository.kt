@@ -16,4 +16,6 @@ interface CurrencyRatesRepository {
     fun getChosenCurrencies(): Flowable<List<Currency>>
 
     fun saveCurrencies(currencies: List<Currency>): Completable
+
+    fun removeCurrencyById(currencyId: Int): Completable
 }

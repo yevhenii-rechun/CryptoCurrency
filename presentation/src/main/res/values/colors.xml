@@ -11,5 +11,6 @@
     <color name="yellow">#fdda25</color>
     <color name="white">#ffffff</color>
     <color name="green">#00c853</color>
+    <color name="delete_background">#ff4b41</color>
 
 </resources>
