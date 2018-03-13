@@ -1,26 +1,30 @@
-package com.zetokz.cryptocurrencyrates.ui.main
+package com.zetokz.cryptocurrencyrates.ui.chosencurrencies
 
 import android.arch.lifecycle.ViewModelProvider
 import android.os.Bundle
 import android.support.design.widget.FloatingActionButton
 import android.support.v7.widget.RecyclerView
 import android.support.v7.widget.Toolbar
+import android.support.v7.widget.helper.ItemTouchHelper
 import bindView
 import com.kennyc.view.MultiStateView
 import com.zetokz.cryptocurrencyrates.R
 import com.zetokz.cryptocurrencyrates.base.BaseActivity
 import com.zetokz.cryptocurrencyrates.ui.addcurrency.AddCurrencyActivity
-import com.zetokz.cryptocurrencyrates.ui.main.adapter.ChosenCurrenciesAdapter
+import com.zetokz.cryptocurrencyrates.ui.chosencurrencies.adapter.ChosenCurrenciesAdapter
+import com.zetokz.cryptocurrencyrates.ui.exchangerate.ExchangeRateActivity
 import com.zetokz.cryptocurrencyrates.ui.model.CurrencyItem
+import com.zetokz.cryptocurrencyrates.util.SwipeToDeleteRecyclerCallback
 import com.zetokz.cryptocurrencyrates.util.extension.getViewModel
 import com.zetokz.cryptocurrencyrates.util.extension.showContentState
 import com.zetokz.cryptocurrencyrates.util.extension.showEmptyState
-import com.zetokz.cryptocurrencyrates.util.extension.showErrorState
-import com.zetokz.cryptocurrencyrates.util.extension.subscribeNoError
+import com.zetokz.cryptocurrencyrates.util.extension.showLoadingState
 import com.zetokz.cryptocurrencyrates.util.list.SpacingItemDecoration
 import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.rxkotlin.addTo
+import io.reactivex.rxkotlin.plusAssign
+import io.reactivex.rxkotlin.subscribeBy
 import javax.inject.Inject
+
 
 class ChosenCurrenciesActivity : BaseActivity(), ChosenCurrenciesRouter {
 
@@ -51,16 +55,24 @@ class ChosenCurrenciesActivity : BaseActivity(), ChosenCurrenciesRouter {
     }
 
     override fun navigateToCurrencyExchangeRates(currencyItem: CurrencyItem) {
-        println("Not implemented") /*TODO("not implemented")*/
+        startActivity(ExchangeRateActivity.getIntent(this))
     }
 
+    @Suppress("WHEN_ENUM_CAN_BE_NULL_IN_JAVA")
     private fun observeData() {
-        viewModel.currenciesData
+        disposables += viewModel.currenciesData
             .observeOn(AndroidSchedulers.mainThread())
-            .doOnNext { if (it.isEmpty()) multiStateView.showEmptyState() else multiStateView.showContentState() }
-            .doOnError { multiStateView.showErrorState() }
-            .subscribeNoError(currencyRatesAdapter::dispatchNewItems)
-            .addTo(disposables)
+            .subscribeBy(onNext = currencyRatesAdapter::dispatchNewItems)
+
+        disposables += viewModel.viewState
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribeBy(onNext = { chosenCurrenciesViewState ->
+                when (chosenCurrenciesViewState) {
+                    ChosenCurrenciesViewState.LOADING -> multiStateView.showLoadingState()
+                    ChosenCurrenciesViewState.CONTENT -> multiStateView.showContentState()
+                    ChosenCurrenciesViewState.EMPTY -> multiStateView.showEmptyState()
+                }
+            })
     }
 
     private fun initToolbar() {
@@ -68,7 +80,7 @@ class ChosenCurrenciesActivity : BaseActivity(), ChosenCurrenciesRouter {
     }
 
     private fun initAdapter() {
-        currencyRatesAdapter = ChosenCurrenciesAdapter(onCurrencyClickedAction = viewModel.currencyItemClick::onNext)
+        currencyRatesAdapter = ChosenCurrenciesAdapter(onCurrencyClickedAction = viewModel.currencyItemClick::accept)
     }
 
     private fun initViews() {
@@ -79,7 +91,10 @@ class ChosenCurrenciesActivity : BaseActivity(), ChosenCurrenciesRouter {
                 showBetween = true
             })
         }
+        SwipeToDeleteRecyclerCallback(context = this, onSwipe = {
+            viewModel.removeCurrency.accept(currencyRatesAdapter.items[it.adapterPosition] as CurrencyItem)
+        }).also { ItemTouchHelper(it).attachToRecyclerView(listCurrencyRates) }
 
-        buttonAdd.setOnClickListener { viewModel.addClick.onNext(true) }
+        buttonAdd.setOnClickListener { viewModel.addClick.accept(true) }
     }
 }

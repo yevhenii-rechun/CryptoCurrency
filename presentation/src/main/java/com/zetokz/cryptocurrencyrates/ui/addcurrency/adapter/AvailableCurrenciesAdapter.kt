@@ -21,7 +21,7 @@ class AvailableCurrenciesAdapter(
         })
     }
 
-    fun dispatchNewItems(items: List<Identifiable>) {
+    fun dispatchNewItems(items: List<CurrencyItemSelectable>) {
         val diff = DiffUtil.calculateDiff(SimpleDiffUtilCallback(this.items, items))
         this.items = items
         diff.dispatchUpdatesTo(this)

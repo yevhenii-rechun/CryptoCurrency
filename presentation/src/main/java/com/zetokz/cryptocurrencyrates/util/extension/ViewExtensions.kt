@@ -3,6 +3,7 @@ package com.zetokz.cryptocurrencyrates.util.extension
 import android.content.Context
 import android.view.View
 import android.widget.ImageView
+import android.widget.SearchView
 import com.bumptech.glide.Glide
 import com.kennyc.view.MultiStateView
 import com.zetokz.cryptocurrencyrates.util.ProgressBarController
@@ -11,6 +12,20 @@ import com.zetokz.cryptocurrencyrates.util.ProgressBarController
  * Created by Yevhenii Rechun on 1/18/18.
  * Copyright © 2017. All rights reserved.
  */
+
+internal fun SearchView.onQueryTextChanged(
+    queryTextChangedFunc: (newQuery: String?) -> Unit,
+    isActionPerformedByListener: Boolean = true
+) {
+    setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+        override fun onQueryTextSubmit(query: String?) = true
+
+        override fun onQueryTextChange(newText: String?): Boolean {
+            queryTextChangedFunc(newText)
+            return isActionPerformedByListener
+        }
+    })
+}
 
 internal fun Context.showBlockingProgressDialog(message: String? = null) {
     ProgressBarController.showProgressDialog(this, message)

@@ -1,4 +1,4 @@
-package com.zetokz.cryptocurrencyrates.ui.main.adapter
+package com.zetokz.cryptocurrencyrates.ui.chosencurrencies.adapter
 
 import android.view.View
 import android.widget.ImageView

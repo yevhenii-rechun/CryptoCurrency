@@ -67,6 +67,7 @@ dependencies {
     implementation Libs.rxJava
     implementation Libs.rxAndroid
     implementation Libs.rxKotlin
+    implementation Libs.rxRelay
 
     implementation Libs.dagger
     kapt Libs.daggerCompiler
@@ -81,6 +82,8 @@ dependencies {
     implementation Libs.adapterDelegates
 
     implementation Libs.stateView
+
+    implementation Libs.ktx
 
     // Development
     implementation Libs.rxLint

@@ -14,9 +14,7 @@ import java.util.concurrent.TimeUnit
 private const val DEBOUNCE_DELAY_MS = 300L
 
 operator fun CompositeDisposable.minusAssign(disposable: Disposable?) {
-    if (disposable != null) {
-        remove(disposable)
-    }
+    if (disposable != null) remove(disposable)
 }
 
 fun <T : Any> Flowable<T>.applyThrottling(): Flowable<T> = compose(applyThrottlingFlowable<T>())

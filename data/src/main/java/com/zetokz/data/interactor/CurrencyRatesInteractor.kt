@@ -15,6 +15,9 @@ class CurrencyRatesInteractor @Inject constructor(
     private val currencyRatesRepository: CurrencyRatesRepository
 ) {
 
+    fun removeCurrency(currencyId: Int) =
+        currencyRatesRepository.removeCurrencyById(currencyId)
+
     fun saveCurrencies(currencies: List<Currency>) =
         currencyRatesRepository.saveCurrencies(currencies)
 

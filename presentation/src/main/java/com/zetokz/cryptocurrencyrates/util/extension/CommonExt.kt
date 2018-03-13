@@ -31,6 +31,8 @@ fun Boolean.ifTrue(block: () -> Unit) {
     }
 }
 
+fun Any?.notEquals(other: Any?): Boolean = this?.equals(other)?.not() ?: false
+
 fun Boolean.ifFalse(block: () -> Unit) {
     if (!this) {
         block()

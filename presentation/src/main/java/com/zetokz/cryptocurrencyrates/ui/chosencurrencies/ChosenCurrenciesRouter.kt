@@ -1,4 +1,4 @@
-package com.zetokz.cryptocurrencyrates.ui.main
+package com.zetokz.cryptocurrencyrates.ui.chosencurrencies
 
 import com.zetokz.cryptocurrencyrates.ui.model.CurrencyItem
 
