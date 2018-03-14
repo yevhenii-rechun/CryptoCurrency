@@ -2,9 +2,12 @@ package com.zetokz.cryptocurrencyrates.util.extension
 
 import android.arch.lifecycle.ViewModelProvider
 import android.arch.lifecycle.ViewModelProviders
+import android.os.Build
 import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentActivity
 import android.support.v7.app.AppCompatActivity
+import android.text.Html
+import android.text.Spanned
 import com.zetokz.cryptocurrencyrates.base.BaseViewModel
 
 
@@ -37,4 +40,11 @@ fun Boolean.ifFalse(block: () -> Unit) {
     if (!this) {
         block()
     }
+}
+
+fun String.toSpannedHtml(): Spanned = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+    Html.fromHtml(this, Html.FROM_HTML_MODE_LEGACY)
+} else {
+    @Suppress("DEPRECATION")
+    Html.fromHtml(this)
 }

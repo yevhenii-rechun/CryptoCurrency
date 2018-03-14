@@ -8,6 +8,7 @@ import com.ihsanbal.logging.LoggingInterceptor
 import com.zetokz.data.BuildConfig
 import com.zetokz.data.RestConfig
 import com.zetokz.data.network.CurrencyRateService
+import com.zetokz.data.network.ExchangeRateService
 import com.zetokz.data.network.HealthCheckerService
 import dagger.Module
 import dagger.Provides
@@ -46,11 +47,25 @@ class NetworkModule {
     internal fun provideRxCallAdapterFactory(gson: Gson): CallAdapter.Factory = RxJava2CallAdapterFactory.create()
 
     @Provides @Singleton
-    internal fun provideRetrofit(
+    internal fun provideRetrofitBaseUrl(
         gson: Gson,
         httpClient: OkHttpClient,
         callFactory: CallAdapter.Factory,
         @Named("base-url") baseUrl: String
+    ): Retrofit = Retrofit.Builder()
+        .addCallAdapterFactory(callFactory)
+        .addConverterFactory(GsonConverterFactory.create(gson))
+        .client(httpClient)
+        .baseUrl(baseUrl)
+        .build()
+
+    @Provides @Singleton
+    @Named("min-api-base-url-retrofit")
+    internal fun provideRetrofitMinApiBaseUrl(
+        gson: Gson,
+        httpClient: OkHttpClient,
+        callFactory: CallAdapter.Factory,
+        @Named("min-api-base-url") baseUrl: String
     ): Retrofit = Retrofit.Builder()
         .addCallAdapterFactory(callFactory)
         .addConverterFactory(GsonConverterFactory.create(gson))
@@ -68,7 +83,16 @@ class NetworkModule {
     internal fun provideBaseUrl() = RestConfig.BASE_URL
 
     @Provides @Singleton
+    @Named("min-api-base-url")
+    internal fun provideMinApiBaseUrl() = RestConfig.MIN_API_BASE_URL
+
+    @Provides @Singleton
     internal fun provideCurrencyRateService(retrofit: Retrofit) = retrofit.create(CurrencyRateService::class.java)
+
+    @Provides @Singleton
+    internal fun provideExchangeRateService(
+        @Named("min-api-base-url-retrofit") retrofit: Retrofit
+    ) = retrofit.create(ExchangeRateService::class.java)
 
     @Provides @Singleton
     internal fun provideHealthCheckerService(retrofit: Retrofit) = retrofit.create(HealthCheckerService::class.java)

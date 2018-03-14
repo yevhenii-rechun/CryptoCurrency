@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -28,13 +29,50 @@
         android:layout_height="match_parent"
         android:orientation="vertical"
         app:layout_behavior="@string/appbar_scrolling_view_behavior"
-        app:msv_errorView="@layout/layout_error"
+        app:msv_errorView="@layout/layout_exchange_rate_error"
         app:msv_loadingView="@layout/layout_default_progress"
-        app:msv_viewState="content">
+        app:msv_viewState="loading">
 
         <LinearLayout
+            android:id="@+id/container_conversions"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <ImageView
+                android:id="@+id/icon_crypto_logo"
+                android:layout_width="@dimen/icon_default_size"
+                android:layout_height="@dimen/icon_default_size"
+                android:layout_gravity="center_horizontal"
+                android:layout_margin="@dimen/normal"
+                android:contentDescription="@string/content_description_currency_logo"
+                tools:src="@tools:sample/avatars" />
+
+            <TextView
+                android:id="@+id/text_currency_name_short"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginLeft="@dimen/normal"
+                android:layout_marginRight="@dimen/normal"
+                android:ellipsize="end"
+                android:textAppearance="@style/CryptoExchange.TextAppearance.Regular.Bold"
+                tools:text="USD" />
+
+            <TextView
+                android:id="@+id/text_currency_name_full"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_margin="@dimen/normal"
+                android:ellipsize="end"
+                tools:text="USD" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginBottom="@dimen/normal"
+                android:background="@color/gray_light" />
 
         </LinearLayout>
 

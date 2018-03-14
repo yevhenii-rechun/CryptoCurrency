@@ -20,6 +20,7 @@ object Versions {
     // Libraries
     const val supportLibrary = "27.0.2"
     const val ktx = "0.2"
+    const val constraintLayout = "1.1.0-beta5"
 
     const val retrofit = "2.3.0"
     const val okHttp = "3.8.0"
@@ -61,6 +62,7 @@ object Libs {
     const val recyclerView = "com.android.support:recyclerview-v7:${Versions.supportLibrary}"
     const val cardView = "com.android.support:cardview-v7:${Versions.supportLibrary}"
     const val supportDesign = "com.android.support:design:${Versions.supportLibrary}"
+    const val constraintLayout = "com.android.support.constraint:constraint-layout:${Versions.constraintLayout}"
 
     // Kotlin
     const val kotlin = "org.jetbrains.kotlin:kotlin-stdlib-jre7:${Versions.kotlinLanguage}"

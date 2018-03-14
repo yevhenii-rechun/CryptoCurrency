@@ -1,14 +1,13 @@
 package com.zetokz.cryptocurrencyrates.ui.addcurrency
 
+import android.app.AlertDialog
 import android.arch.lifecycle.ViewModelProvider
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.support.design.widget.FloatingActionButton
-import android.support.v7.app.AlertDialog
 import android.support.v7.widget.RecyclerView
 import android.support.v7.widget.Toolbar
-import android.support.v7.widget.helper.ItemTouchHelper
 import android.view.Menu
 import android.widget.Button
 import android.widget.SearchView
@@ -68,7 +67,7 @@ class AddCurrencyActivity : BaseActivity(), AddCurrencyRouter {
         AlertDialog.Builder(this)
             .setMessage(R.string.activity_choose_currency_dialog_close_without_saving_message)
             .setPositiveButton(R.string.action_save, { _, _ -> viewModel.saveCurrenciesClick.accept(true) })
-            .setNegativeButton(R.string.action_exig, { _, _ -> viewModel.saveCurrenciesClick.accept(false) })
+            .setNegativeButton(R.string.action_exit, { _, _ -> viewModel.saveCurrenciesClick.accept(false) })
             .show()
     }
 
@@ -130,24 +129,6 @@ class AddCurrencyActivity : BaseActivity(), AddCurrencyRouter {
                 showBetween = true
             })
         }
-
-        val itemTouchHelperCallback =
-            object : ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT and ItemTouchHelper.RIGHT) {
-                override fun onMove(
-                    recyclerView: RecyclerView,
-                    viewHolder: RecyclerView.ViewHolder,
-                    target: RecyclerView.ViewHolder
-                ): Boolean {
-                    return false
-                }
-
-                override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
-//                    viewModel.removeCurrency.accept(currencyRatesAdapter.items[viewHolder.adapterPosition])
-                }
-            }
-
-        ItemTouchHelper(itemTouchHelperCallback).attachToRecyclerView(listCurrencyRates)
-
 
         buttonSave.setOnClickListener { viewModel.saveCurrenciesClick.accept(true) }
         buttonRefresh.setOnClickListener { viewModel.refreshDataClick.accept(true) }

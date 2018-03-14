@@ -1,8 +1,11 @@
 package com.zetokz.data.repository
 
 import com.zetokz.data.database.dao.CurrencyDao
+import com.zetokz.data.model.Conversion
 import com.zetokz.data.model.Currency
+import com.zetokz.data.model.toConversionList
 import com.zetokz.data.network.CurrencyRateService
+import com.zetokz.data.network.ExchangeRateService
 import dagger.Reusable
 import io.reactivex.Completable
 import io.reactivex.Flowable
@@ -17,6 +20,7 @@ import javax.inject.Inject
 @Reusable
 internal class CurrencyRatesRepositoryImpl @Inject constructor(
     private val currencyRateService: CurrencyRateService,
+    private val exchangeRateService: ExchangeRateService,
     private val currencyDao: CurrencyDao
 ) : CurrencyRatesRepository {
 
@@ -36,4 +40,8 @@ internal class CurrencyRatesRepositoryImpl @Inject constructor(
         Completable.fromAction { currencyDao.deleteCurrencyById(currencyId) }
             .subscribeOn(Schedulers.io())
 
+    override fun getExchangeRates(baseCurrency: String): Single<List<Conversion>> =
+        exchangeRateService.fetchExchangeRate(baseCurrency)
+            .subscribeOn(Schedulers.io())
+            .map { it.toConversionList(baseCurrency) }
 }

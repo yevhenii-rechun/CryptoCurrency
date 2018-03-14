@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <android.support.design.widget.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:theme="@style/CryptoExchange.AppBarOverlay">
+
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbar"
+            style="@style/CryptoExchange.Toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?actionBarSize"
+            android:background="?colorPrimary"
+            app:popupTheme="@style/CryptoExchange.ToolbarPopupOverlay">
+
+        </android.support.v7.widget.Toolbar>
+
+    </android.support.design.widget.AppBarLayout>
+
+    <com.kennyc.view.MultiStateView xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/multi_state_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        app:msv_errorView="@layout/layout_exchange_rate_error"
+        app:msv_loadingView="@layout/layout_default_progress"
+        app:msv_viewState="loading">
+
+        <android.support.constraint.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center">
+
+            <ImageView
+                android:id="@+id/icon_crypto_logo"
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/icon_default_size"
+                android:layout_marginTop="@dimen/normal"
+                android:contentDescription="@string/content_description_currency_logo"
+                app:layout_constraintBottom_toTopOf="@+id/text_currency_name_short"
+                app:layout_constraintEnd_toStartOf="@+id/barrier"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_chainStyle="packed"
+                tools:src="@tools:sample/avatars" />
+
+            <TextView
+                android:id="@+id/text_currency_name_short"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/icon_crypto_logo"
+                android:ellipsize="end"
+                android:padding="@dimen/normal"
+                android:textAppearance="@style/CryptoExchange.TextAppearance.Regular.Bold"
+                app:layout_constraintBottom_toTopOf="@+id/text_currency_name_full"
+                app:layout_constraintEnd_toStartOf="@+id/barrier"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/icon_crypto_logo"
+                tools:text="USD" />
+
+            <TextView
+                android:id="@+id/text_currency_name_full"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/text_currency_name_short"
+                android:layout_marginBottom="@dimen/normal"
+                android:ellipsize="end"
+                android:paddingLeft="@dimen/normal"
+                android:paddingRight="@dimen/normal"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/barrier"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/text_currency_name_short"
+                tools:text="USDasdasdasdasdasdasdasdasd" />
+
+            <android.support.constraint.Barrier
+                android:id="@+id/barrier"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/normal"
+                app:barrierDirection="end"
+                app:constraint_referenced_ids="text_currency_name_full,text_currency_name_short,icon_crypto_logo" />
+
+            <View
+                android:id="@+id/divider"
+                android:layout_width="1dp"
+                android:layout_height="match_parent"
+                android:background="@color/gray_light"
+                app:layout_constraintStart_toEndOf="@+id/barrier" />
+
+            <LinearLayout
+                android:id="@+id/container_conversions"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:orientation="vertical"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/divider"
+                app:layout_constraintTop_toTopOf="parent" />
+
+        </android.support.constraint.ConstraintLayout>
+
+    </com.kennyc.view.MultiStateView>
+
+</android.support.design.widget.CoordinatorLayout>

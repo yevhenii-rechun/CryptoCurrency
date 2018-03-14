@@ -6,6 +6,8 @@ import com.zetokz.cryptocurrencyrates.ui.addcurrency.AddCurrencyActivity
 import com.zetokz.cryptocurrencyrates.ui.addcurrency.AddCurrencyModule
 import com.zetokz.cryptocurrencyrates.ui.chosencurrencies.ChosenCurrenciesActivity
 import com.zetokz.cryptocurrencyrates.ui.chosencurrencies.ChosenCurrenciesModule
+import com.zetokz.cryptocurrencyrates.ui.exchangerate.ExchangeRateActivity
+import com.zetokz.cryptocurrencyrates.ui.exchangerate.ExchangeRateModule
 import dagger.Binds
 import dagger.Module
 import dagger.android.ContributesAndroidInjector
@@ -26,10 +28,7 @@ interface ActivitiesModule {
     @ActivityScope @ContributesAndroidInjector(modules = [AddCurrencyModule::class])
     fun contributeAddCurrencyActivity(): AddCurrencyActivity
 
-//    @ActivityScope @ContributesAndroidInjector
-//    fun contributeCurrencyDetailsActivity(): CurrencyDetailsActivity
-
-//    @ActivityScope @ContributesAndroidInjector
-//    fun contributeAddCurrencyActivity(): AddCurrencyActivity
+    @ActivityScope @ContributesAndroidInjector(modules = [ExchangeRateModule::class])
+    fun contributeExchangeRateActivity(): ExchangeRateActivity
 
 }

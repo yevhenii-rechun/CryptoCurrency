@@ -58,6 +58,7 @@ dependencies {
     implementation Libs.supportLib
     implementation Libs.recyclerView
     implementation Libs.cardView
+    implementation Libs.constraintLayout
     implementation Libs.supportDesign
 
     // Kotlin
