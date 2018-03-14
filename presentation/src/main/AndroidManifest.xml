@@ -27,7 +27,7 @@
             android:label="@string/activity_choose_currency_title" />
         <activity
             android:name=".ui.exchangerate.ExchangeRateActivity"
-            android:label="@string/activity_choose_exchange_rate_title" />
+            android:label="@string/activity_exchange_rate_title" />
     </application>
 
 </manifest>

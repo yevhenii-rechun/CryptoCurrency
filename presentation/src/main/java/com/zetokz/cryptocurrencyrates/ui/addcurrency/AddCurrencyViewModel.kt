@@ -12,6 +12,7 @@ import com.zetokz.data.model.Currency
 import io.reactivex.Completable
 import io.reactivex.Observable
 import io.reactivex.Single
+import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposables
 import io.reactivex.rxkotlin.Singles
 import io.reactivex.rxkotlin.plusAssign
@@ -66,6 +67,7 @@ class AddCurrencyViewModel @Inject constructor(
         disposables += backButtonClick
             .subscribeOn(Schedulers.io())
             .map { needToShowSaveChangesDialog }
+            .observeOn(AndroidSchedulers.mainThread())
             .doOnNext { isNeedToShowDialog ->
                 if (isNeedToShowDialog) addCurrencyRouter.showCloseDialog()
                 else addCurrencyRouter.close()

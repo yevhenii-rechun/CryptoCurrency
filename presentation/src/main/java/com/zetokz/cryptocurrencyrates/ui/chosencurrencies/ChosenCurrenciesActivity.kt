@@ -55,7 +55,7 @@ class ChosenCurrenciesActivity : BaseActivity(), ChosenCurrenciesRouter {
     }
 
     override fun navigateToCurrencyExchangeRates(currencyItem: CurrencyItem) {
-        startActivity(ExchangeRateActivity.getIntent(this))
+        startActivity(ExchangeRateActivity.getIntent(this, currencyItem))
     }
 
     @Suppress("WHEN_ENUM_CAN_BE_NULL_IN_JAVA")

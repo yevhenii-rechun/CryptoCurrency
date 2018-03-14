@@ -27,6 +27,6 @@ class CurrencyRatesInteractor @Inject constructor(
     fun getAvailableCurrencies(): Single<List<Currency>> =
         currencyRatesRepository.getAvailableCurrencies()
 
-    fun getExchangeRates(baseCurrency: String): List<Conversion> = TODO()
-
+    fun getExchangeRates(baseCurrency: String): Single<List<Conversion>> =
+        currencyRatesRepository.getExchangeRates(baseCurrency)
 }

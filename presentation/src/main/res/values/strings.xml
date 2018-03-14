@@ -1,10 +1,13 @@
 <resources>
-    <string name="app_name">CryptoCurrencyRates</string>
+    <string name="app_name">CryptoConverter</string>
 
     <string name="action_refresh">Refresh</string>
-    <string name="action_exig">Exit</string>
+    <string name="action_exit">Exit</string>
     <string name="action_save">Save</string>
     <string name="action_search">Search</string>
+    <string name="action_choose_another">Choose another</string>
+
+    <string name="conversion_view_tag" translatable="false">conversion_view</string>
 
     <string name="activity_chosen_currencies_title">Chosen crypto</string>
     <string name="activity_chosen_currencies_no_items_message">Add at least one currency</string>
@@ -16,7 +19,9 @@
 
     <string name="activity_choose_currency_error_message">Currencies can not be loaded now\nPlease, check you internet connection and try again</string>
 
-    <string name="activity_choose_exchange_rate_title">Exchange rates</string>
+    <string name="activity_exchange_rate_title">Exchange rates</string>
+    <string name="activity_exchange_error_message_no_data">There is no data for this currency</string>
+    <string name="activity_exchange_base_currency_to_conversion"><![CDATA[1 %1$s = <b>%2$s %3$s</b>]]></string>
 
     <string name="content_description_currency_logo">Currency logo</string>
 

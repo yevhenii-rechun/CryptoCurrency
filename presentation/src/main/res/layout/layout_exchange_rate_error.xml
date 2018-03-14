@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="match_parent"
     android:orientation="vertical">
 
     <TextView
@@ -10,17 +10,17 @@
         android:layout_gravity="center"
         android:layout_margin="@dimen/normal"
         android:gravity="center"
-        android:text="@string/activity_choose_currency_error_message"
+        android:text="@string/activity_exchange_error_message_no_data"
         android:textAppearance="@style/CryptoExchange.TextAppearance.Regular.Bold" />
 
     <Button
-        android:id="@+id/button_refresh"
+        android:id="@+id/button_choose_another"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_margin="@dimen/normal"
         android:backgroundTint="@color/color_accent"
-        android:text="@string/action_refresh"
+        android:text="@string/action_choose_another"
         android:textAllCaps="true"
         android:textAppearance="@style/CryptoExchange.TextAppearance.Regular.Bold"
         android:textColor="@color/white" />

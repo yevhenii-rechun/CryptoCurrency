@@ -1,6 +1,7 @@
 package com.zetokz.cryptocurrencyrates.ui.model
 
 import com.zetokz.data.RestConfig
+import com.zetokz.data.model.Conversion
 import com.zetokz.data.model.Currency
 
 /**
@@ -16,3 +17,7 @@ fun Currency.toCurrencySelectableItem() =
     CurrencyItemSelectable(RestConfig.IMAGE_BASE_URL + imageUrl, name, fullName, false)
 
 fun List<Currency>.toCurrencySelectableItems() = asSequence().map(Currency::toCurrencySelectableItem).toList()
+
+fun Conversion.toConversionItem() = ConversionItem(baseCurrency, conversionCurrencyName, conversionCurrencyValue)
+
+fun List<Conversion>.toConversionItems() = asSequence().map(Conversion::toConversionItem).toList()
